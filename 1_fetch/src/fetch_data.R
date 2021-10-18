@@ -1,4 +1,6 @@
-# Fetch data from ScienceBase
-mendota_file <- file.path("1_fetch/out", 'mendota_raw.csv')
-item_file_download('5d925066e4b0c4f70d0d0599', names = 'me_RMSE.csv', 
-                   destinations = mendota_file, overwrite_file = TRUE)
+# Function to fetch data
+fetch_data <- function(sb_id, item_name, out_dir, out_file) {
+  destination <- file.path(out_dir, out_file)
+  item_file_download(sb_id, names = item_name, destinations = destination, 
+                     overwrite_file = TRUE) 
+}
