@@ -1,7 +1,8 @@
 # Function to prepare data for plotting
 
 data_4plot <- function(data, colors, symbols) {
-  filter(data, str_detect(exper_id, 'similar_[0-9]+')) %>%
+  data %>%
+    filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
     mutate(col = case_when(
       model_type == 'pb' ~ colors[1], 
       model_type == 'dl' ~ colors[2],
