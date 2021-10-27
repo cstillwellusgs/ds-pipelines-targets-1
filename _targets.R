@@ -1,35 +1,38 @@
 library(targets)
-source("code.R")
+source("pipelines_targets_1.R")
 tar_option_set(packages = c("tidyverse", "sbtools", "whisker"))
 
 list(
   # Get the data from ScienceBase
   tar_target(
-    model_RMSEs_csv,
-    download_data(out_filepath = "1_fetch/out/model_RMSEs.csv"),
+    new_data_raw,
+    fetch_data(out_filepath = "1_fetch/out/new_mendota_data.csv"),
     format = "file"
   ), 
   # Prepare the data for plotting
   tar_target(
-    eval_data,
-    process_data(in_filepath = model_RMSEs_csv),
+    new_data_plot,
+    prep_data(in_filepath = new_data_raw),
   ),
   # Create a plot
   tar_target(
-    figure_1_png,
-    make_plot(out_filepath = "3_plot/out/figure_1.png", data = eval_data), 
+    new_figure_1,
+    plot_data(out_filepath = "3_plot/out/new_figure_1.png", 
+              data = new_data_plot), 
     format = "file"
   ),
   # Save the processed data
   tar_target(
-    model_summary_results_csv,
-    write_csv(eval_data, file = "3_plot/out/model_summary_results.csv"), 
+    new_model_results,
+    write_csv(new_data_plot, 
+              file = "3_plot/out/new_data_plot.csv"), 
     format = "file"
   ),
   # Save the model diagnostics
   tar_target(
-    model_diagnostic_text_txt,
-    generate_model_diagnostics(out_filepath = "4_summary/out/model_diagnostic_text.txt", data = eval_data), 
+    new_model_summary,
+    summarise_data(out_filepath = "4_summary/out/new_summary.txt", 
+                   data = new_data_plot), 
     format = "file"
   )
 )
