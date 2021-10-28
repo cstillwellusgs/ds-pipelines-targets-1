@@ -3,6 +3,10 @@ source("1_fetch/src/fetch_data.R")
 source("2_prep/src/prep_data.R")
 source("3_plot/src/plot_data.R")
 source("4_summary/src/summarise_data.R")
+dir.create("1_fetch/out/", showWarnings = FALSE)
+dir.create("2_prep/out/", showWarnings = FALSE)
+dir.create("3_plot/out/", showWarnings = FALSE)
+dir.create("4_summary/out/", showWarnings = FALSE)
 tar_option_set(packages = c("tidyverse", "sbtools"))
 
 list(
